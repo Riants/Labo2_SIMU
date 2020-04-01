@@ -5,10 +5,11 @@
 using namespace std;
 
 void readCoordinates(ifstream &file, int n, item* item_list){
-    float e; float r;
+    int e; float r;
     for(int i=0; i<n; i++){
       file >> e >> r;
-      item_list[i].METHOD_NAME(e,r);
+      item_list[i].setIntFloat(e,r);
+      cout << "Elemento " << r << " agregado " << endl;
     }
 }
 
@@ -27,7 +28,9 @@ int main() {
         file.open(filename);
     }while(!file);
 
+    cout << "Archivo abierto" << endl;
     file >> k >> Q;
+    cout << k << " " << Q << endl;
     file >> nnodes >> neltos >> ndirich >> nneu;
 
     file >> line;
@@ -36,11 +39,14 @@ int main() {
     m.setSizes(nnodes, neltos, ndirich, nneu);
     m.createData();
 
-    readCoordinates(file,ANSWER,m.getNodes());
+    readCoordinates(file,nnodes,m.getNodes());
 
     file.close();
+    cout << "Archivo cerrado" << endl;
 
-    SHOW NODES' VALUE
+    for(int i=0; i<nnodes; i++){
+        cout << m.getNode(i).getX() << endl;
+    }
 
     return 0;
 }
